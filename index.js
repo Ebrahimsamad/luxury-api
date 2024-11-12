@@ -7,6 +7,7 @@ const Admin = require("./models/admin");
 const adminRouter = require("./routes/admin");
 const colorRouter = require("./routes/color");
 const sharpRouter = require("./routes/sharp");
+const categoryRouter = require("./routes/category");
 const PORT = 3000;
 const app = express();
 app.use(express.json());
@@ -14,8 +15,12 @@ app.use(cors());
 
 app.use("/color", colorRouter);
 app.use("/sharp", sharpRouter);
+app.use("/category", categoryRouter);
 app.use(adminRouter);
 
+app.use((req, res, next) => {
+  res.status(404).json({ message: `this route: ${req.url} not found` });
+});
 app.use((err, req, res, next) => {
   if (err instanceof CustomError) {
     res.status(err.statusCode).json({ message: err.message });
