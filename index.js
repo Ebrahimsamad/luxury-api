@@ -5,11 +5,13 @@ const cors = require("cors");
 const CustomError = require("./utils/customError");
 const Admin = require("./models/admin");
 const adminRouter = require("./routes/admin");
+const colorRouter = require("./routes/color");
 const PORT = 3000;
 const app = express();
 app.use(express.json());
 app.use(cors());
 
+app.use("/color", colorRouter);
 app.use(adminRouter);
 
 app.use((err, req, res, next) => {
