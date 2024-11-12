@@ -2,19 +2,19 @@ const CustomError = require("../utils/customError");
 
 module.exports = (schema) => async (req, res, next) => {
   try {
-    let bodyValidation = { ...req.body };
+    let bodyValidtion = { ...req.body };
 
-    if (req.files && req.files["image"]) {
-      bodyValidation = {
-        ...bodyValidation,
+    if (req.file) {
+      bodyValidtion = {
+        ...req.body,
         image: {
-          buffer: req.files["image"][0].buffer,
-          mimetype: req.files["image"][0].mimetype,
+          buffer: req.file.buffer,
+          mimetype: req.file.mimetype,
         },
       };
     }
 
-    await schema.validateAsync(bodyValidation, { abortEarly: false });
+    await schema.validateAsync(bodyValidtion, { abortEarly: false });
     next();
   } catch (err) {
     const messages = err.details.map((detail) => detail.message).join(", ");

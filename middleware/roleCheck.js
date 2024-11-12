@@ -1,4 +1,6 @@
+const CustomError = require("../utils/customError");
+
 module.exports = (role) => async (req, res, next) => {
   if (role === req.user.isSuperAdmin) return next();
-  res.status(403).send({ message: "Not authorized" });
+  return next(new CustomError("Not authorized", 403));
 };
