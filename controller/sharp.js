@@ -1,5 +1,7 @@
 const CustomError = require("../utils/customError");
 const Sharp = require("../models/sharp");
+const Category = require("../models/category");
+const Product = require("../models/product");
 
 exports.createSharp = async (req, res, next) => {
   const { code, image } = req.body;
@@ -62,6 +64,11 @@ exports.deleteSharp = async (req, res, next) => {
     if (!sharp) {
       return next(new CustomError("Sharp not found.", 404));
     }
+    await Category.updateMany(
+      { sharpIds: sharp._id },
+      { $pull: { sharpIds: sharp._id } }
+    );
+    await Product.deleteMany({sharpId:sharp._id})
     res.status(200).send({ message: "Deleted successfully", sharp });
   } catch (error) {
     next(new CustomError(error.message, 500));

@@ -8,19 +8,19 @@ const createCategoryValidation = Joi.object({
     }),
     image: Joi.object({
         buffer: Joi.binary().messages({
-          "binary.base": "Color image file data must be provided",
+          "binary.base": "Category image file data must be provided",
         }),
         mimetype: Joi.string()
           .regex(/^image\//)
           .messages({
-            "string.base": "Color image type must be a string",
-            "string.pattern.base": "Invalid color image type",
+            "string.base": "Category image type must be a string",
+            "string.pattern.base": "Invalid Category image type",
           }),
       })
         .required()
         .messages({
-          "any.required": "Color image is required.",
-          "object.base": "Color image must be an object",
+          "any.required": "Category image is required.",
+          "object.base": "Category image must be an object",
         }),
     colorIds: Joi.array().min(1).required().messages({
         "array.base": "Color IDs must be an array.",
@@ -40,16 +40,16 @@ const updateCategoryValidation = Joi.object({
     }),
     image: Joi.object({
         buffer: Joi.binary().messages({
-          "binary.base": "Color image file data must be provided",
+          "binary.base": "Category image file data must be provided",
         }),
         mimetype: Joi.string()
           .regex(/^image\//)
           .messages({
-            "string.base": "Color image type must be a string",
-            "string.pattern.base": "Invalid color image type",
+            "string.base": "Category image type must be a string",
+            "string.pattern.base": "Invalid Category image type",
           }),
       }).messages({
-        "object.base": "Color image must be an object",
+        "object.base": "Category image must be an object",
       }),
     colorIds: Joi.array().min(1).messages({
         "array.base": "Color IDs must be an array.",
