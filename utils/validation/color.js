@@ -1,9 +1,9 @@
 const Joi = require("joi");
 const createColorValidation = Joi.object({
-  code: Joi.string().required().messages({
-    "string.base": "Color code must be a string.",
-    "string.empty": "Color code is required.",
-    "any.required": "Color code is required.",
+  name: Joi.string().required().messages({
+    "string.base": "Color name must be a string.",
+    "string.empty": "Color name is required.",
+    "any.required": "Color name is required.",
   }),
   colorHex: Joi.string().required().messages({
     "string.base": "Color hex must be a string.",
@@ -28,8 +28,8 @@ const createColorValidation = Joi.object({
     }),
 });
 const updateColorValidation = Joi.object({
-  code: Joi.string().messages({
-    "string.base": "Color code must be a string.",
+  name: Joi.string().messages({
+    "string.base": "Color name must be a string.",
   }),
   colorHex: Joi.string().messages({
     "string.base": "Color hex must be a string.",

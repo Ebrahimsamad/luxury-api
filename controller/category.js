@@ -2,6 +2,7 @@ const Category = require("../models/category");
 const Color = require("../models/color");
 const Sharp = require("../models/sharp");
 const CustomError = require("../utils/customError");
+const Product = require("../models/product");
 
 const checkIfIdsExist = async (Model, ids) => {
   const existingItems = await Model.find({ _id: { $in: ids } });
@@ -114,7 +115,7 @@ const categoryController = {
     if (!deletedCategory) {
       return next(new CustomError("Category not found", 404));
     }
-
+    await Product.deleteMany({categoryId:deletedCategory._id})
     res.status(200).send({ message: "Category deleted successfully" });
   },
 

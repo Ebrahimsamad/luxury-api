@@ -1,16 +1,18 @@
 const CustomError = require("../utils/customError");
 const Color = require("../models/color");
+const Category = require("../models/category");
+const Product = require("../models/product");
 
 exports.createColor = async (req, res, next) => {
-  const { code, colorHex, image } = req.body;
+  const { name, colorHex, image } = req.body;
 
-  const colorSaved = await Color.findOne({ code });
+  const colorSaved = await Color.findOne({ name });
 
   if (colorSaved) {
-    return next(new CustomError("Color with this code already exists.", 409));
+    return next(new CustomError("Color with this name already exists.", 409));
   }
 
-  const color = new Color({ code, colorHex, image });
+  const color = new Color({ name, colorHex, image });
 
   try {
     const savedColor = await color.save();
@@ -34,12 +36,12 @@ exports.getAllColors = async (req, res, next) => {
 exports.editColor = async (req, res, next) => {
   try {
     const body = req.body;
-    if (body.code) {
-      const colorSaved = await Color.findOne({ code: body.code });
+    if (body.name) {
+      const colorSaved = await Color.findOne({ name: body.name });
 
       if (colorSaved) {
         return next(
-          new CustomError("Color with this code already exists.", 409)
+          new CustomError("Color with this name already exists.", 409)
         );
       }
     }
@@ -62,6 +64,11 @@ exports.deleteColor = async (req, res, next) => {
     if (!color) {
       return next(new CustomError("Color not found.", 404));
     }
+    await Category.updateMany(
+      { colorIds: color._id },
+      { $pull: { colorIds: color._id } }
+    );
+    await Product.deleteMany({colorId:color._id})
     res.status(200).send({ message: "Deleted successfully", color });
   } catch (error) {
     next(new CustomError(error.message, 500));

@@ -1,7 +1,7 @@
 const { model, Schema } = require("mongoose");
 
 const colorSchema = new Schema({
-  code: {
+  name: {
     type: String,
   },
   colorHex: {
