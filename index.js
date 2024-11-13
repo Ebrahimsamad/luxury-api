@@ -9,6 +9,8 @@ const colorRouter = require("./routes/color");
 const sharpRouter = require("./routes/sharp");
 const categoryRouter = require("./routes/category");
 const productRouter = require("./routes/product");
+const orderRouter = require("./routes/order");
+const contactUs=require("./routes/contact-us")
 const PORT = 3000;
 const app = express();
 app.use(express.json());
@@ -18,6 +20,8 @@ app.use("/color", colorRouter);
 app.use("/sharp", sharpRouter);
 app.use("/category", categoryRouter);
 app.use("/product", productRouter);
+app.use("/order", orderRouter);
+app.use("/contact-us",contactUs);
 app.use(adminRouter);
 
 app.use((req, res, next) => {
